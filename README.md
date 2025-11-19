@@ -17,11 +17,6 @@ This project compares 5 models and selects the best model to predict whether a p
 - [Recommended Model for Deployment](#recommended-model-for-deployment)
 - [How to Use the Model](#how-to-use-the-model)
 
-- [Project Structure](#project-structure)
-- [Technology Stack](#technology-stack)
-- [Author](#author)
-- [License](#license)
-
 ---
 
 ## Project Overview
@@ -61,12 +56,16 @@ A data‑driven predictive model can support decision making by flagging individ
 | Smoking_status | Smoking behavior |
 | Stroke | Target variable (0 = No stroke, 1 = Stroke) |
 
+---
+
 ## Exploratory Data Analysis
 - Feature Understanding shows the distribution of patients with stroke was HIGHLY IMBALANCED, hence the dataset would require special handling in modeling.
   - No Stroke (0): 4,861 (95.13%)
   - Stroke (1): 249 (4.87%)
   - Imbalance Ratio: 19.5:1
 - Correlation analysis showed age was highly correlated with the occurence of Stroke.
+
+---
 
 ## Feature Engineering
 - Created binary flags and categorical bins for Age, glucose level, BMI, and comorbidity
@@ -76,11 +75,15 @@ A data‑driven predictive model can support decision making by flagging individ
   - The glucose level of most of the patients (3,131) was within the normal range (0 - 100)
   - Patients with comorbidity (i.e either Hypertension OR heart disease) had a higher risk (14.08 %) of having stroke than those who dont have these conditions (3.39 %)
 
+---
+
 ## Data Preprocessing
 - Imputed missing BMI values (201) with median: 28.10
 - Scaling numerical features
 - Encoding categorical variables
 - SMOTE balancing for class imbalance
+
+---
 
 ## Modeling Approach
 Models trained include:
@@ -90,6 +93,8 @@ Models trained include:
 - Gradient Boosting
 - KNN (SMOTE)
 
+---
+
 ## Model Evaluation Metrics
 Metrics used for comparison:
 - Accuracy
@@ -97,6 +102,8 @@ Metrics used for comparison:
 - Recall
 - F1‑Score
 - AUC‑ROC
+
+---
 
 ## Results & Insights
 ### **Key Observations and their Implication for Patient Care**
@@ -113,6 +120,8 @@ Metrics used for comparison:
 - Using ensemble methods (Random Forest or Tree-based) that inherently balance class weights rather than synthetic oversampling, handled imbalance best.
 - Both Random Forest (AUC 0.84) and Gradient Boosting (AUC 0.82), which are both ensemble methods, had superior discrimination power (AUC) compared to simpler models like Logistic Regression (AUC 0.83) and Decision Tree (AUC 0.79). However, **Random Forest** maintained high recall and decent precision/accuracy — making it more clinically reliable.
 - Gradient Boosting, despite higher accuracy, failed catastrophically on recall (missed nearly all stroke cases).
+
+---
 
 ## Recommended Model for Deployment: 
 
@@ -131,6 +140,8 @@ Metrics used for comparison:
 - Use Random Forest for stroke risk screening in rural clinics or mobile health systems.
 - Flag patients with top 10–20% predicted risk for follow-up by clinicians.
 - Continue monitoring and retraining the model periodically to improve calibration.
+
+---
 
 ## How to Use the Model
 ```python
