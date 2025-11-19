@@ -61,6 +61,7 @@ A data‑driven predictive model can support decision making by flagging individ
 | Stroke | Target variable (0 = No stroke, 1 = Stroke) |
 
 ## Exploratory Data Analysis
+- Feature Understanding shows the distribution of patients with stroke was HIGHLY IMBALANCED, hence the dataset would require special handling in modeling.
 - Distribution plots
 - Correlation analysis
 - Risk group comparisons
