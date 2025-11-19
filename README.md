@@ -1,7 +1,7 @@
 # Stroke Prediction Model
 ---
 
-This model predicts whether a patient is likely to get stroke based on the input parameters like gender, age, various diseases, and smoking status.
+This project compares 5 models and selects the best model to predict whether a patient is likely to get stroke based on the input parameters like gender, age, various diseases, and smoking status.
 
 ## Table of Contents
 - [Project Overview](#project-overview)
@@ -14,8 +14,9 @@ This model predicts whether a patient is likely to get stroke based on the input
 - [Modeling Approach](#modeling-approach)
 - [Model Evaluation Metrics](#model-evaluation-metrics)
 - [Results & Insights](#results--insights)
+- [Recommended Model for Deployment](#recommended-model-for-deployment)
 - [How to Use the Model](#how-to-use-the-model)
-- [Future Improvements](#future-improvements)
+
 - [Project Structure](#project-structure)
 - [Technology Stack](#technology-stack)
 - [Author](#author)
@@ -98,10 +99,41 @@ Metrics used for comparison:
 - AUC‑ROC
 
 ## Results & Insights
-The Gradient Boosting model delivered the best performance for detecting true positive stroke cases, demonstrating highest recall and F1‑score.
+### **Key Observations and their Implication for Patient Care**
+| **Model**               | **Key Observations**                                                                  | **Implication for Patient Care**                                                                                                                |
+| ----------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Logistic Regression** | Recall = 0.80 (high), but Precision = 0.13 (low).                                     | Catches most stroke patients but also flags many healthy patients as “at risk.” Good for screening, but may cause unnecessary anxiety or tests. |
+| **Decision Tree**       | Balanced Recall (0.76) and better Precision (0.17).                                   | Slightly fewer false alarms, but still a large number of unnecessary follow-ups. Reasonable screening tool.                                     |
+| **Random Forest**       | Best trade-off: Recall = 0.80, Precision = 0.17, AUC = 0.84.                          | Reliable at catching stroke risk with moderate false alarms — strong candidate for real-world triage support.                                   |
+| **Gradient Boosting**   | Extremely high Accuracy (0.95) but Recall = 0.04 — it missed almost all stroke cases. | Dangerous in clinical use. Despite its accuracy, it *fails to identify patients at risk*. Not suitable for healthcare deployment.               |
+| **KNN (SMOTE)**         | Recall = 0.38, Precision = 0.10, AUC = 0.65.                                          | Catches fewer strokes, inconsistent results. Not ideal for clinical use.                                                                        |
+
+- SMOTE (Synthetic Minority Oversampling) was only used in KNN. While it improved minority representation, the KNN (SMOTE) model did not outperform ensemble models.
+- Random Forest (without explicit SMOTE) handled imbalance better, likely due to bootstrap sampling and class-weight balancing internally.
+- Using ensemble methods (Random Forest or Tree-based) that inherently balance class weights rather than synthetic oversampling, handled imbalance best.
+- Both Random Forest (AUC 0.84) and Gradient Boosting (AUC 0.82), which are both ensemble methods, had superior discrimination power (AUC) compared to simpler models like Logistic Regression (AUC 0.83) and Decision Tree (AUC 0.79). However, **Random Forest** maintained high recall and decent precision/accuracy — making it more clinically reliable.
+- Gradient Boosting, despite higher accuracy, failed catastrophically on recall (missed nearly all stroke cases).
+
+## Recommended Model for Deployment: 
+
+### Random Forest
+
+**Why Random Forest?**
+
+- Detects most stroke-risk patients (Recall = 0.80).
+- Avoids catastrophic misses (unlike Gradient Boosting).
+- Offers robust AUC (0.84) → good separation between risk levels.
+- Handles data imbalance effectively without needing SMOTE.
+- Easy to interpret feature importances for clinical explanation.
+
+**Deployment Use Case:**
+
+- Use Random Forest for stroke risk screening in rural clinics or mobile health systems.
+- Flag patients with top 10–20% predicted risk for follow-up by clinicians.
+- Continue monitoring and retraining the model periodically to improve calibration.
 
 ## How to Use the Model
 ```python
 from joblib import load
-model = load("stroke_model.joblib")
+model = load("random_forest_stroke_model.joblib")
 prediction = model.predict(input_data)
