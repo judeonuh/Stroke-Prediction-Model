@@ -62,18 +62,21 @@ A data‑driven predictive model can support decision making by flagging individ
 
 ## Exploratory Data Analysis
 - Feature Understanding shows the distribution of patients with stroke was HIGHLY IMBALANCED, hence the dataset would require special handling in modeling.
-- Distribution plots
-- Correlation analysis
-- Risk group comparisons
+  - No Stroke (0): 4,861 (95.13%)
+  - Stroke (1): 249 (4.87%)
+  - Imbalance Ratio: 19.5:1
+- Correlation analysis showed age was highly correlated with the occurence of Stroke.
 
 ## Feature Engineering
-Examples:
-- Age groups
-- Comorbidity flags
-- Risk factor count features
+- Created binary flags and categorical bins for Age, glucose level, BMI, and comorbidity
+- `Key Findings:`
+  - Patients within the age 50 - 65 yrs (senior) make up the highest number (1,183) of participants
+  - Majority of the patients (1,506) were obesed (BMI between 30 - 40).
+  - The glucose level of most of the patients (3,131) was within the normal range (0 - 100)
+  - Patients with comorbidity (i.e either Hypertension OR heart disease) had a higher risk (14.08 %) of having stroke than those who dont have these conditions (3.39 %)
 
 ## Data Preprocessing
-- Handling missing values
+- Imputed missing BMI values (201) with median: 28.10
 - Scaling numerical features
 - Encoding categorical variables
 - SMOTE balancing for class imbalance
