@@ -8,6 +8,7 @@ This project compares 5 models and selects the best model to predict whether a p
 - [Problem Statement](#problem-statement)
 - [Project Objectives](#project-objectives)
 - [Dataset Description](#dataset-description)
+- [Skills Demonstrated](#skills-demonstrated)  
 - [Exploratory Data Analysis](#exploratory-data-analysis)
 - [Feature Engineering](#feature-engineering)
 - [Data Preprocessing](#data-preprocessing)
@@ -58,7 +59,7 @@ A data‑driven predictive model can support decision making by flagging individ
 
 ---
 
-# Skills Demonstrated
+## Skills Demonstrated
 * Python
 * Scikit-learn
 * SMOTE
