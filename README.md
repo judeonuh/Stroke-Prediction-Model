@@ -58,12 +58,28 @@ A data‑driven predictive model can support decision making by flagging individ
 
 ---
 
+# Skills Demonstrated
+* Python
+* Scikit-learn
+* SMOTE
+* Imbalanced classification
+* Healthcare ML
+* Model deployment
+* Feature engineering
+* Clinical decision support
+
+---
+
 ## Exploratory Data Analysis
 - Feature Understanding shows the distribution of patients with stroke was HIGHLY IMBALANCED, hence the dataset would require special handling in modeling.
   - No Stroke (0): 4,861 (95.13%)
   - Stroke (1): 249 (4.87%)
   - Imbalance Ratio: 19.5:1
 - Correlation analysis showed age was highly correlated with the occurence of Stroke.
+
+![stroke distr](/img/stroke_distribution.png)  
+![age group stroke distr](/img/stroke_rate_by_category.png)  
+![corr with stroke](img/correlation_with_stroke.png)  
 
 ---
 
@@ -113,9 +129,11 @@ Metrics used for comparison:
 | **Decision Tree**       | Balanced Recall (0.76) and better Precision (0.17).                                   | Slightly fewer false alarms, but still a large number of unnecessary follow-ups. Reasonable screening tool.                                     |
 | **Random Forest**       | Best trade-off: Recall = 0.80, Precision = 0.17, AUC = 0.84.                          | Reliable at catching stroke risk with moderate false alarms — strong candidate for real-world triage support.                                   |
 | **Gradient Boosting**   | Extremely high Accuracy (0.95) but Recall = 0.04 — it missed almost all stroke cases. | Dangerous in clinical use. Despite its accuracy, it *fails to identify patients at risk*. Not suitable for healthcare deployment.               |
-| **KNN (SMOTE)**         | Recall = 0.38, Precision = 0.10, AUC = 0.65.                                          | Catches fewer strokes, inconsistent results. Not ideal for clinical use.                                                                        |
+| **KNN (SMOTE)**         | Recall = 0.38, Precision = 0.10, AUC = 0.65.                                          | Catches fewer strokes, inconsistent results. Not ideal for clinical use.                                                                        |  
 
-- SMOTE (Synthetic Minority Oversampling) was only used in KNN. While it improved minority representation, the KNN (SMOTE) model did not outperform ensemble models.
+![model comparison](img/model_performance_comparison.png)  
+
+- Tree-based models handle imbalance relatively well because they split on informative features, isolating minority regions via decision boundaries. Therefore, SMOTE (Synthetic Minority Oversampling) was only used in the KNN model. This is because it creates synthetic minority examples, improving neighbourhood structure and consequently, giving KNN better local geometry. While it improved minority representation, the KNN (SMOTE) model did not outperform ensemble models.
 - Random Forest (without explicit SMOTE) handled imbalance better, likely due to bootstrap sampling and class-weight balancing internally.
 - Using ensemble methods (Random Forest or Tree-based) that inherently balance class weights rather than synthetic oversampling, handled imbalance best.
 - Both Random Forest (AUC 0.84) and Gradient Boosting (AUC 0.82), which are both ensemble methods, had superior discrimination power (AUC) compared to simpler models like Logistic Regression (AUC 0.83) and Decision Tree (AUC 0.79). However, **Random Forest** maintained high recall and decent precision/accuracy — making it more clinically reliable.
